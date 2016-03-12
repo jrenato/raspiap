@@ -26,7 +26,7 @@ echo " performing a series of prechecks..."
 ###################################################
 
 #check current user privileges
-  (( `id -u` )) && echo "This script MUST be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
+(( `id -u` )) && echo "This script MUST be ran with root privileges, try prefixing with sudo. i.e sudo $0" && exit 1
 
 #check that internet connection is available
 
@@ -128,39 +128,39 @@ echo
 
 # Point of no return
 read -p "Do you wish to continue and Setup RPi as an Access Point? (y/n) " RESP
-  if [ "$RESP" = "y" ]; then
+if [ "$RESP" = "y" ]; then
 
-  clear
-  echo "Configuring RPI as an Access Point...."
-  # update system
-  echo ""
-  echo "#####################PLEASE WAIT##################"######
-  echo -en "Package list update                                 "
-  apt-get -qq update && apt-get upgrade
-  echo -en "[OK]\n"
+clear
+echo "Configuring RPI as an Access Point...."
+# update system
+echo ""
+echo "#####################PLEASE WAIT##################"######
+echo -en "Package list update                                 "
+apt-get -qq update && apt-get upgrade
+echo -en "[OK]\n"
 
-  echo -en "Adding packages                                     "
-  apt-get -y -qq install rfkill zd1211-firmware hostapd hostap-utils iw dnsmasq
-  echo -en "[OK]\n"
+echo -en "Adding packages                                     "
+apt-get -y -qq install rfkill zd1211-firmware hostapd hostap-utils iw dnsmasq
+echo -en "[OK]\n"
 
-  if [ ! -f /etc/hostapd/hostapd.conf ]; then
-    echo "Backup: hostapd.conf.ap.bak"
-    mv /etc/hostapd/hostapd.conf /etc/hostapd.conf.ap.bak
-  fi
+if [ ! -f /etc/hostapd/hostapd.conf ]; then
+echo "Backup: hostapd.conf.ap.bak"
+mv /etc/hostapd/hostapd.conf /etc/hostapd.conf.ap.bak
+fi
 
-  #create the hostapd configuration to match what the user has provided
-  echo -en "Create hostapd.conf file                            "
-  cat <<EOF > /etc/hostapd/hostapd.conf
-  #created by $0
-  interface=$AP_WIFACE
-  driver=nl80211
-  country_code=$AP_COUNTRY
-  ssid=$AP_SSID
-  channel=$AP_CHAN
-  wpa=3
-  wpa_passphrase=$AP_PASSPHRASE
-  wpa_key_mgmt=WPA-PSK
-  wpa_pairwise=TKIP
+#create the hostapd configuration to match what the user has provided
+echo -en "Create hostapd.conf file                            "
+cat <<EOF > /etc/hostapd/hostapd.conf
+#created by $0
+interface=$AP_WIFACE
+driver=nl80211
+country_code=$AP_COUNTRY
+ssid=$AP_SSID
+channel=$AP_CHAN
+wpa=3
+wpa_passphrase=$AP_PASSPHRASE
+wpa_key_mgmt=WPA-PSK
+wpa_pairwise=TKIP
 EOF
   rc=$?
   if [[ $rc != 0 ]] ; then
