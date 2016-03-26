@@ -2,6 +2,7 @@
 Turn your Raspberry Pi into an Access Point
 
 Based on the installer for the Realtek RTL8188CUS, from Paul Miller.
+
 https://github.com/jchan172/raspberry_pi_wifi_ap
 
 It's basically a fork, except it uses the hostapd from the repositories, not a custom one, and it only works for dongles using the nl80211 driver. It might work for Realtek dongles using the rtl871xdrv instead, but not the RTL8188.
